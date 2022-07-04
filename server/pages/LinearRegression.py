@@ -37,8 +37,11 @@ if (file is not None):
         y_var = st.selectbox("Please choose option: ", data.keys(), key="y_variable");
 
     st.write("##### Prediction");
+    pred = st.number_input("Prediction's value");
+
     st.write("#### Graph's Color");
 
+    # Colors 
     color1, color2 = st.columns(2);
 
     with color1: 
@@ -56,6 +59,7 @@ if (file is not None):
     regression.fit(dot_x, dot_y);
     prediction = regression.predict(dot_x);
     r2 = r2_score(dot_y, prediction);
+    value_predict = regression.predict([[pred]]);
 
 
     # Plot
@@ -76,7 +80,23 @@ if (file is not None):
         st.pyplot(fig);
 
         st.write("#### Information Graph");
-        
+
+        column1, column2, column3 = st.columns(3);
+
+        slope = round(float(regression.coef_), 4);
+        column1.metric("Slope", slope, "+ Positive" if slope>=0 else "- Negative");
+
+        intersection = round(float(regression.intercept_), 4);
+        column2.metric("Intesection", intersection, "+ Positive" if intersection>=0 else "- Negative");
+
+        column3.metric("R²", round(r2, 4));   
+        st.metric("Mean Square Error", mean_squared_error(dot_y, prediction));
+
+        st.subheader("Tendency Function");
+        st.latex(f"f(x)={slope}x {'+ ' if intersection>=0 else ''}{intersection}");
+
+        st.subheader("Prediction");
+        st.metric(f"From {pred} the value is: ", value_predict, "+ Positive" if value_predict>=0 else "- Negative");
 
 else: 
     st.warning("Expect to load file");
