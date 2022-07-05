@@ -2,7 +2,7 @@ from click import File
 import pandas as pd;
 import os;
 
-def load_file(file: File) -> pd.DataFrame:
+def upload_file(file: File) -> pd.DataFrame:
     complete_name = os.path.splitext(file.name);
 
     file_name = complete_name[0];
