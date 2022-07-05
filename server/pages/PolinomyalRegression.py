@@ -28,11 +28,11 @@ if (file is not None):
 
     with column1:
         st.write("#### Independent Variable (x):");
-        x_var = st.selectbox("Please choose the independent variable: ", data.keys(), key="x_variable");
+        x_var = st.selectbox("Please choose the independent variable: ", data.keys());
 
     with column2:
         st.write("#### Dependent Variable (y):");
-        y_var = st.selectbox("Please choose the Dependent variable: ", data.keys(), key="y_variable");
+        y_var = st.selectbox("Please choose the Dependent variable: ", data.keys());
 
     st.write("> ### Degree");
     degree = st.radio("Choose the grade of the model", (2, 3, 4, 5), horizontal=True);
@@ -166,6 +166,3 @@ if (file is not None):
         plt.ylabel(y_var); # Add title of x-axes
         plt.xlabel(x_var); # Add title of y-axes
         """, language="python");
-
-else: 
-    st.info("You must upload a file");
